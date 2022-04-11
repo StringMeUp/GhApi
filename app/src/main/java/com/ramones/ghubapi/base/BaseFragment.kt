@@ -5,23 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class BaseFragment<VDBinding : ViewDataBinding>(private val inflate: Inflate<VDBinding>) : Fragment() {
+abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) : Fragment() {
 
     open fun setUpView() {}
     open fun setUpViewBinding() {}
     open fun setUpViewModelBinding() {}
 
-    private var _binding: VDBinding? = null
+    private var _binding: VB? = null
     protected val viewBinding
         get() = _binding!!
 
     @NonNull
-    protected abstract fun inflateBinding(): Class<VDBinding>
+    protected abstract fun inflateBinding(): Class<VB>
 
     @NonNull
     protected abstract fun setContent(): Int

@@ -1,8 +1,8 @@
 package com.ramones.ghubapi.di
 
-import com.google.gson.Gson
 import com.ramones.ghubapi.BuildConfig
 import com.ramones.ghubapi.networking.GhApiService
+import com.ramones.ghubapi.repository.MainRepository
 import com.ramones.ghubapi.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -46,9 +46,9 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(provideBaseUrl())
             .client(okHttpClient)
             .build()
@@ -58,5 +58,11 @@ object NetworkingModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): GhApiService =
         retrofit.create(GhApiService::class.java)
+
+
+    @Singleton
+    @Provides
+    fun provideMainRepository(apiService: GhApiService): MainRepository =
+        MainRepository(apiService)
 
 }
