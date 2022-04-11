@@ -1,8 +1,8 @@
 package com.ramones.ghubapi.di
 
 import com.ramones.ghubapi.BuildConfig
-import com.ramones.ghubapi.networking.GhApiService
-import com.ramones.ghubapi.repository.MainRepository
+import com.ramones.ghubapi.networking.SearchApiService
+import com.ramones.ghubapi.repository.SearchRepository
 import com.ramones.ghubapi.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -56,13 +56,13 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): GhApiService =
-        retrofit.create(GhApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): SearchApiService =
+        retrofit.create(SearchApiService::class.java)
 
 
     @Singleton
     @Provides
-    fun provideMainRepository(apiService: GhApiService): MainRepository =
-        MainRepository(apiService)
+    fun provideMainRepository(apiService: SearchApiService): SearchRepository =
+        SearchRepository(apiService)
 
 }

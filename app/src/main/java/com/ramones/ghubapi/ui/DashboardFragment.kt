@@ -14,10 +14,11 @@ class DashboardFragment :
 
     override fun setContent(): Int = R.layout.fragment_dashboard
 
-    private val model: DashboardViewModel by viewModels()
+    private val viewModel: DashboardViewModel by viewModels()
 
     override fun setUpView() {
         super.setUpView()
+        viewModel.getTestData()
     }
 
     override fun setUpViewBinding() {
