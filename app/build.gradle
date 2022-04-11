@@ -1,6 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -26,12 +31,52 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 }
 
 dependencies {
+    /* Retrofit */
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    /* Gson */
+    implementation "com.squareup.retrofit2:converter-gson:$gson_version"
+    /* Coroutines */
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    /* Navigation */
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    /* Glide */
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    /* Logging */
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    /* Hilt */
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    /* Room */
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    /* Core + Splash Api */
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.core:core-splashscreen:$splash_screen_version"
+    /* Rx */
+    implementation "io.reactivex.rxjava3:rxandroid:rx_kotlin_version"
+    implementation "io.reactivex.rxjava3:rxjava:rx_kotlin_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rx_kotlin_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding:$rx_bindings_version"
+    /* Serialization */
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_serialization"
+    /* Activity + Fragment Support */
+    implementation "androidx.fragment:fragment-ktx:$fragment_version_ktx"
+    implementation "androidx.activity:activity-ktx:$activity_version_ktx"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
