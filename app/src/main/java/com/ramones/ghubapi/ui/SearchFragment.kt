@@ -1,9 +1,7 @@
 package com.ramones.ghubapi.ui
 
-import android.os.Looper
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding4.widget.afterTextChangeEvents
 import com.ramones.ghubapi.R
 import com.ramones.ghubapi.base.BaseFragment
@@ -13,9 +11,7 @@ import com.ramones.ghubapi.util.hide
 import com.ramones.ghubapi.util.show
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
-import java.util.logging.Handler
 
 @AndroidEntryPoint
 class SearchFragment :
@@ -46,7 +42,7 @@ class SearchFragment :
             compositeDisposable?.add(
                 searchEditText.afterTextChangeEvents()
                     .skipInitialValue()
-                    .debounce(100, TimeUnit.MILLISECONDS)
+                    .debounce(500, TimeUnit.MILLISECONDS)
                     .subscribe {
                         viewModel.setQuery(it.editable.toString())
                     })

@@ -43,7 +43,7 @@ class SearchViewModel @Inject constructor(
                 page = page.value ?: let { 0 },
                 itemsPerPage = Constants.DEFAULT_PAYLOAD,
                 sort = type.value?.name ?: let { SortType.STARS.name })
-                .catch { /** todo*/ }
+                .catch { /** todo hande emptyState and error state*/ }
                 .collect {
                     _repositories.postValue(it)
                 }
