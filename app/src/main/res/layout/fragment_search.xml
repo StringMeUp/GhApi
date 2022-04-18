@@ -42,4 +42,13 @@
             android:textColor="@color/black" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="48dp"
+        android:visibility="visible"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/gh_orange"
+        android:layout_height="48dp"
+        android:indeterminate="true" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
