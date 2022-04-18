@@ -1,8 +1,8 @@
 package com.ramones.ghubapi.ui
 
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding4.widget.afterTextChangeEvents
 import com.ramones.ghubapi.R
 import com.ramones.ghubapi.base.BaseFragment
@@ -10,6 +10,7 @@ import com.ramones.ghubapi.databinding.FragmentDashboardBinding
 import com.ramones.ghubapi.networking.helper.ApiResponse
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -23,16 +24,21 @@ class DashboardFragment :
 
     var compositeDisposable: CompositeDisposable? = null
     private val viewModel: DashboardViewModel by viewModels()
+    private val dashboardAdapter by lazy { DashboardAdapter() }
 
     override fun setUpView() {
         super.setUpView()
-        viewModel.initializeDefaultSearch()
+        viewModel.search()
         compositeDisposable = CompositeDisposable()
     }
 
     override fun setUpViewBinding() {
         super.setUpViewBinding()
         binding.apply {
+            reposRecyclerView.apply {
+                adapter = dashboardAdapter
+            }
+
             compositeDisposable?.add(
                 searchEditText.afterTextChangeEvents()
                     .skipInitialValue()
@@ -49,7 +55,9 @@ class DashboardFragment :
             when (it) {
                 is ApiResponse.Failure -> {}
                 is ApiResponse.Loading -> {}
-                is ApiResponse.Success -> {}
+                is ApiResponse.Success -> {
+                    dashboardAdapter.repos = it.value!!
+                }
             }
         })
     }

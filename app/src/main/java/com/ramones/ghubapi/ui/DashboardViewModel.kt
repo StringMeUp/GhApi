@@ -7,6 +7,8 @@ import com.ramones.ghubapi.networking.helper.SortType
 import com.ramones.ghubapi.repository.SearchRepository
 import com.ramones.ghubapi.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +21,8 @@ class DashboardViewModel @Inject constructor(
     private val searchQuery: LiveData<String>
         get() = _searchQuery
 
-    private var _repositories = MutableLiveData<ApiResponse<List<Repository>>>()
-    val repositories: LiveData<ApiResponse<List<Repository>>>
+    private var _repositories = MutableLiveData<ApiResponse<ArrayList<Repository>>>()
+    val repositories: LiveData<ApiResponse<ArrayList<Repository>>>
         get() = _repositories
 
     private var _page = MutableLiveData<Int>()
@@ -33,10 +35,18 @@ class DashboardViewModel @Inject constructor(
 
     private var defaultPage = 0
 
-    fun initializeDefaultSearch() {
-        _repositories.postValue(
-            repository.searchRepositories(searchQuery.value ?: Constants.DEFAULT_QUERY).asLiveData().value
-        )
+    fun search() {
+        viewModelScope.launch {
+            repository.searchRepositories(
+                query = searchQuery.value ?: Constants.DEFAULT_QUERY,
+                page = page.value ?: let { 0 },
+                itemsPerPage = Constants.DEFAULT_PAYLOAD,
+                sort = type.value?.name ?: let { SortType.STARS.name })
+                .catch { /** todo*/ }
+                .collect {
+                    _repositories.postValue(it)
+                }
+        }
     }
 
     fun setQuery(query: String) {
@@ -50,18 +60,5 @@ class DashboardViewModel @Inject constructor(
 
     fun setFilter(type: SortType) {
         _type.postValue(type)
-    }
-
-    fun search() {
-        viewModelScope.launch {
-            repository.deleteRepositories()
-            defaultPage = 0
-            repository.searchRepositories(
-                query = searchQuery.value!!,
-                page = page.value!!,
-                itemsPerPage = Constants.DEFAULT_PAYLOAD,
-                sort = type.value!!.name
-            ).asLiveData().value
-        }
     }
 }
