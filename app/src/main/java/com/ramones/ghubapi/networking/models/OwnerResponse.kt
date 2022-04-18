@@ -2,7 +2,7 @@ package com.ramones.ghubapi.networking.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Owner(
+data class OwnerResponse(
     val id: Long,
     @SerializedName("login")
     val name: String?,

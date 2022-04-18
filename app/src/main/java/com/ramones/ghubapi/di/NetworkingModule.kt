@@ -1,8 +1,10 @@
 package com.ramones.ghubapi.di
 
 import com.ramones.ghubapi.BuildConfig
+import com.ramones.ghubapi.db.dao.RepositoryDao
 import com.ramones.ghubapi.networking.SearchApiService
 import com.ramones.ghubapi.repository.SearchRepository
+import com.ramones.ghubapi.repository.SearchSource
 import com.ramones.ghubapi.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -62,7 +64,12 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(apiService: SearchApiService): SearchRepository =
-        SearchRepository(apiService)
+    fun provideSearchSource(apiService: SearchApiService): SearchSource =
+        SearchSource(apiService)
 
+
+    @Singleton
+    @Provides
+    fun provideMainRepository(searchSource: SearchSource, repositoryDao: RepositoryDao): SearchRepository =
+        SearchRepository(searchSource, repositoryDao)
 }

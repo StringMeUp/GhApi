@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Room
 import com.ramones.ghubapi.R
 import com.ramones.ghubapi.db.AppDataBase
+import com.ramones.ghubapi.db.dao.RepositoryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.ramones.ghubapi.db.SessionDao
+import com.ramones.ghubapi.db.dao.SessionDao
 import javax.inject.Singleton
 
 @Module
@@ -20,6 +21,12 @@ object DataBaseModule {
     @Singleton
     fun provideOAuthDao(appDataBase: AppDataBase): SessionDao {
         return appDataBase.authDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepositoryDao(appDataBase: AppDataBase): RepositoryDao {
+        return appDataBase.repositoryDao()
     }
 
     @Provides

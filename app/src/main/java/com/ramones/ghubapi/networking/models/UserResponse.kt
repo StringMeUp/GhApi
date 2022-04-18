@@ -1,6 +1,6 @@
 package com.ramones.ghubapi.networking.models
 
-data class User(
+data class UserResponse(
     val login: String?,
     val id: Long,
     val avatar_url: String?,

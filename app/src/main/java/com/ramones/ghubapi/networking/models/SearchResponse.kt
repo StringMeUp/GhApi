@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SearchResponse(
     @SerializedName("total_count")
-    val totalCount: Int = 0,
+    val totalCount: Int,
     @SerializedName("items")
-    val repositories: List<Repository> = emptyList(),
-    val nextPage: Int
+    val repositoryResponse: List<RepositoryResponse>
 )
