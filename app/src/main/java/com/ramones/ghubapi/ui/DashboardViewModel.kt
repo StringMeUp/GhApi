@@ -1,26 +1,67 @@
 package com.ramones.ghubapi.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
+import com.ramones.ghubapi.db.dbmodels.Repository
+import com.ramones.ghubapi.networking.helper.ApiResponse
+import com.ramones.ghubapi.networking.helper.SortType
 import com.ramones.ghubapi.repository.SearchRepository
 import com.ramones.ghubapi.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    repository: SearchRepository
+    val repository: SearchRepository
 ) : ViewModel() {
 
-    var _searchQuery = MutableLiveData<String>()
+    private var _searchQuery = MutableLiveData<String>()
     private val searchQuery: LiveData<String>
-    get() = _searchQuery
+        get() = _searchQuery
 
-    fun setQuery(query: String){
+    private var _repositories = MutableLiveData<ApiResponse<List<Repository>>>()
+    val repositories: LiveData<ApiResponse<List<Repository>>>
+        get() = _repositories
+
+    private var _page = MutableLiveData<Int>()
+    val page: LiveData<Int>
+        get() = _page
+
+    private var _type = MutableLiveData<SortType>()
+    val type: LiveData<SortType>
+        get() = _type
+
+    private var defaultPage = 0
+
+    fun initializeDefaultSearch() {
+        _repositories.postValue(
+            repository.searchRepositories(searchQuery.value ?: Constants.DEFAULT_QUERY).asLiveData().value
+        )
+    }
+
+    fun setQuery(query: String) {
         _searchQuery.postValue(query)
     }
 
-    val repositories = repository.searchRepositories(searchQuery.value ?: Constants.DEFAULT_QUERY).asLiveData()
+    fun setPage() {
+        defaultPage.inc()
+        _page.postValue(defaultPage)
+    }
+
+    fun setFilter(type: SortType) {
+        _type.postValue(type)
+    }
+
+    fun search() {
+        viewModelScope.launch {
+            repository.deleteRepositories()
+            defaultPage = 0
+            repository.searchRepositories(
+                query = searchQuery.value!!,
+                page = page.value!!,
+                itemsPerPage = Constants.DEFAULT_PAYLOAD,
+                sort = type.value!!.name
+            ).asLiveData().value
+        }
+    }
 }

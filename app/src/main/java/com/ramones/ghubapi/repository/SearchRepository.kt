@@ -16,6 +16,8 @@ interface SearchRepositoryApi {
         itemsPerPage: Int = 10,
         sort: String = SortType.STARS.name
     ): Flow<ApiResponse<List<Repository>>>
+
+    suspend fun deleteRepositories(){}
 }
 
 class SearchRepository @Inject constructor(
@@ -34,4 +36,7 @@ class SearchRepository @Inject constructor(
             persist = { repositoryDao.insertRepositories(RepositoryDto.fromResponse(it.repositoryResponse)) },
             observeData = { ApiResponse.success(repositoryDao.getRepositories()) })
 
+    override suspend fun deleteRepositories() {
+        repositoryDao.clearRepositories()
+    }
 }

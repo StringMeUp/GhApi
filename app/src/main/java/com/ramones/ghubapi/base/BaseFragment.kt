@@ -17,7 +17,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     open fun setUpViewModelBinding() {}
 
     private var _binding: VB? = null
-    protected val viewBinding
+    protected val binding
         get() = _binding!!
 
     @NonNull
@@ -33,7 +33,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     ): View? {
 
         initViewBinding(inflater, container)
-        return viewBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
