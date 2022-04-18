@@ -14,7 +14,7 @@ data class Repository(
     val htmlUrl: String?,
     val description: String?,
     val isFork: Boolean,
-    val ownerResponse: Owner?,
+    val owner: Owner?,
     val watchers: Long?,
     val forks: Long?,
     val issues: Long?,

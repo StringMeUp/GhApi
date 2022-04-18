@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GhubApi</string>
     <string name="gh_api_db">bml_db</string>
+    <string name="search_here_hint">Search Here...</string>
 </resources>

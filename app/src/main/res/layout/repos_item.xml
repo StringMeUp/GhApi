@@ -1,97 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/black">
-
-    <ImageView
-        android:id="@+id/avatar_image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher" />
-
-    <TextView
-        android:id="@+id/name_text_view"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="start"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/avatar_image_view"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Author's name placeholder" />
-
-    <TextView
-        android:id="@+id/repo_name_text_view"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@id/details_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/avatar_image_view"
-        app:layout_constraintTop_toBottomOf="@id/name_text_view"
-        tools:text="Some really long name..." />
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/details_container"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatar_image_view">
+        android:layout_margin="2dp"
+        android:background="@drawable/repos_background_selector">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/fork_image_view"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+        <ImageView
+            android:id="@+id/avatar_image_view"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_user"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_fork" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/forks_label_text_view"
-            android:layout_width="wrap_content"
+            android:id="@+id/name_text_view"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@id/issues_image_view"
-            app:layout_constraintStart_toEndOf="@+id/fork_image_view"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Number of forks: 12" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/issues_image_view"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            app:layout_constraintEnd_toStartOf="@id/isses_label_text_view"
-            app:layout_constraintStart_toEndOf="@+id/forks_label_text_view"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_fork" />
-
-        <TextView
-            android:id="@+id/isses_label_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/issues_image_view"
-            app:layout_constraintTop_toTopOf="@+id/issues_image_view"
-            tools:text="Number of issies: 999" />
+            app:layout_constraintStart_toEndOf="@+id/avatar_image_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Author's name" />
 
+        <TextView
+            android:id="@+id/repo_name_text_view"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="start"
+            android:textColor="@color/black"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/avatar_image_view"
+            app:layout_constraintTop_toBottomOf="@id/name_text_view"
+            tools:layout_editor_absoluteY="8dp"
+            tools:text="Some really long name..." />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatar_image_view">
+
+            <LinearLayout
+                android:id="@+id/forks_parent_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="@id/issues_parent_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/fork_image_view"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    app:srcCompat="@drawable/ic_fork" />
+
+                <TextView
+                    android:id="@+id/forks_label_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/black"
+                    tools:text="Forks: \n12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/issues_parent_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/forks_parent_container"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/issues_image_view"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="2dp"
+                    android:layout_marginEnd="8dp"
+                    app:srcCompat="@drawable/ic_issues"
+                    tools:layout_editor_absoluteX="104dp" />
+
+                <TextView
+                    android:id="@+id/issues_label_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="Issues: \n999" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
