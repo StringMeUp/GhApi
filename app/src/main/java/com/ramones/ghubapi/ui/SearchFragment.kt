@@ -2,6 +2,7 @@ package com.ramones.ghubapi.ui
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding4.widget.afterTextChangeEvents
 import com.ramones.ghubapi.R
 import com.ramones.ghubapi.base.BaseFragment
@@ -11,6 +12,8 @@ import com.ramones.ghubapi.util.hide
 import com.ramones.ghubapi.util.show
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -61,8 +64,12 @@ class SearchFragment :
                         binding.progressCircular.show()
                     }
                     is ApiResponse.Success -> {
-                        binding.progressCircular.hide()
+                        /** At times, even though it is very rare, the code is simply too good and you have to delay stuff. */
                         dashboardAdapter.repos = it.value!!
+                        lifecycleScope.launch {
+                            delay(500)
+                            binding.progressCircular.hide()
+                        }
                     }
                 }
             }
