@@ -13,12 +13,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(
+class SearchViewModel @Inject constructor(
     val repository: SearchRepository
 ) : ViewModel() {
 
     private var _searchQuery = MutableLiveData<String>()
-    private val searchQuery: LiveData<String>
+    val searchQuery: LiveData<String>
         get() = _searchQuery
 
     private var _repositories = MutableLiveData<ApiResponse<ArrayList<Repository>>>()
@@ -35,10 +35,11 @@ class DashboardViewModel @Inject constructor(
 
     private var defaultPage = 0
 
-    fun search() {
+    fun search(query: String? = null) {
         viewModelScope.launch {
+            repository.deleteRepositories()
             repository.searchRepositories(
-                query = searchQuery.value ?: Constants.DEFAULT_QUERY,
+                query = query ?: Constants.DEFAULT_QUERY,
                 page = page.value ?: let { 0 },
                 itemsPerPage = Constants.DEFAULT_PAYLOAD,
                 sort = type.value?.name ?: let { SortType.STARS.name })

@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.ramones.ghubapi.ui.DashboardFragment"
+        android:name="com.ramones.ghubapi.ui.SearchFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_search" />
 
 </navigation>

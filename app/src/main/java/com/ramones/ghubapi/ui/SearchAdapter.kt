@@ -8,7 +8,7 @@ import com.ramones.ghubapi.databinding.ReposItemBinding
 import com.ramones.ghubapi.db.dbmodels.Repository
 import java.lang.StringBuilder
 
-class DashboardAdapter : RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder>() {
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.DashboardViewHolder>() {
 
     var repos = ArrayList<Repository>()
         set(value) {
